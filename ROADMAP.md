@@ -50,19 +50,19 @@ Milestone 8: Frontend (Quasar SPA) Integration
   - `id`, `ticket_id` (foreign key ➔ `tickets.id`, `cascadeOnDelete`).
   - `user_id` (foreign key ➔ `users.id`, `restrictOnDelete`).
   - `body` (text), `timestamps`.
-- [ ] Create migration for `ticket_activities` table:
+- [Done] Create migration for `ticket_activities` table:
   - `id`, `ticket_id` (foreign key ➔ `tickets.id`, `cascadeOnDelete`).
   - `user_id` (nullable foreign key ➔ `users.id`, `nullOnDelete`).
   - `event_type` (string, 50), `old_value` (nullable), `new_value` (nullable), `description` (nullable).
   - `created_at` (timestamp only, no `updated_at`).
   - Indexes: `ticket_id`, `created_at`.
-- [ ] Create Seeders (`UserSeeder`, `CategorySeeder`) with dummy test accounts for each role (`admin@example.com`, `agent@example.com`, `employee@example.com`).
-- [ ] Run `php artisan migrate:fresh --seed`.
+- [Done] Create Seeders (`UserSeeder`, `CategorySeeder`) with dummy test accounts for each role (`admin@example.com`, `agent@example.com`, `employee@example.com`).
+- [Done] Run `php artisan migrate:fresh --seed`.
 
 ### Definition of Done:
-- [ ] Running `php artisan migrate:fresh --seed` runs completely without SQL errors.
-- [ ] `SHOW CREATE TABLE tickets;` in MySQL confirms foreign key constraints and composite indexes.
-- [ ] Database contains seeded users for all three roles and active categories.
+- [Done] Running `php artisan migrate:fresh --seed` runs completely without SQL errors.
+- [Done] `SHOW CREATE TABLE tickets;` in MySQL confirms foreign key constraints and composite indexes.
+- [Done] Database contains seeded users for all three roles and active categories.
 
 ---
 
@@ -70,19 +70,19 @@ Milestone 8: Frontend (Quasar SPA) Integration
 **Goal:** Implement token-based authentication via Laravel Sanctum Bearer tokens and verify active user checks.
 
 ### Tasks:
-- [ ] Ensure `HasApiTokens` trait is present on the `User` model.
-- [ ] Create Form Request `app/Http/Requests/Api/V1/LoginRequest.php` (email and password required).
-- [ ] Create `app/Http/Resources/Api/V1/UserResource.php`.
-- [ ] Create `AuthController` under `app/Http/Controllers/Api/V1/`.
-- [ ] Implement `POST /api/v1/login`:
+- [Done] Ensure `HasApiTokens` trait is present on the `User` model.
+- [Done] Create Form Request `app/Http/Requests/Api/V1/LoginRequest.php` (email and password required).
+- [Done] Create `app/Http/Resources/Api/V1/UserResource.php`.
+- [Done] Create `AuthController` under `app/Http/Controllers/Api/V1/`.
+- [Done] Implement `POST /api/v1/login`:
   - Validate credentials.
   - Check `is_active === true` directly in auth attempt.
   - Return plaintext Sanctum token and user profile resource.
-- [ ] Implement `POST /api/v1/logout`:
+- [Done] Implement `POST /api/v1/logout`:
   - Revoke current token (`$request->user()->currentAccessToken()->delete()`).
-- [ ] Implement `GET /api/v1/me`:
+- [Done] Implement `GET /api/v1/me`:
   - Return authenticated user data wrapped in `UserResource`.
-- [ ] Build a Postman collection to test login, logout, and protected routes.
+- [Done] Build a Postman collection to test login, logout, and protected routes.
 
 ### Definition of Done:
 - [ ] Invalid credentials return `401 Unauthorized` or `422 Unprocessable Content`.

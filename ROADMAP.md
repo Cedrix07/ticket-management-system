@@ -27,9 +27,11 @@ Milestone 8: Frontend (Quasar SPA) Integration
 ---
 
 ## 📦 Milestone 1: Scaffolding & Database Migrations
+
 **Goal:** Initialize the Laravel API backend, configure the MySQL database, and migrate all 5 core tables with constraints and indexes.
 
 ### Tasks:
+
 - [Done] Create the Laravel project inside `backend/` (`composer create-project laravel/laravel backend`).
 - [Done] Configure `backend/.env` with local MySQL database credentials.
 - [Done] Create the PHP 8.4 Backed Enum: `app/Enums/UserRole.php` (`ADMIN = 'admin'`, `SUPPORT_AGENT = 'support_agent'`, `EMPLOYEE = 'employee'`).
@@ -60,6 +62,7 @@ Milestone 8: Frontend (Quasar SPA) Integration
 - [Done] Run `php artisan migrate:fresh --seed`.
 
 ### Definition of Done:
+
 - [Done] Running `php artisan migrate:fresh --seed` runs completely without SQL errors.
 - [Done] `SHOW CREATE TABLE tickets;` in MySQL confirms foreign key constraints and composite indexes.
 - [Done] Database contains seeded users for all three roles and active categories.
@@ -67,9 +70,11 @@ Milestone 8: Frontend (Quasar SPA) Integration
 ---
 
 ## 🔐 Milestone 2: Authentication & User Profile (Sanctum Tokens)
+
 **Goal:** Implement token-based authentication via Laravel Sanctum Bearer tokens and verify active user checks.
 
 ### Tasks:
+
 - [Done] Ensure `HasApiTokens` trait is present on the `User` model.
 - [Done] Create Form Request `app/Http/Requests/Api/V1/LoginRequest.php` (email and password required).
 - [Done] Create `app/Http/Resources/Api/V1/UserResource.php`.
@@ -85,65 +90,74 @@ Milestone 8: Frontend (Quasar SPA) Integration
 - [Done] Build a Postman collection to test login, logout, and protected routes.
 
 ### Definition of Done:
-- [ ] Invalid credentials return `401 Unauthorized` or `422 Unprocessable Content`.
-- [ ] Deactivated users (`is_active = false`) are rejected during login.
-- [ ] Login returns `{ "token": "...", "user": { ... } }`.
-- [ ] Requests with `Authorization: Bearer <token>` succeed on `GET /api/v1/me`.
-- [ ] Unauthenticated requests to protected endpoints return `401`.
-- [ ] Logout invalidates the token so it cannot be reused.
+
+- [Done] Invalid credentials return `401 Unauthorized` or `422 Unprocessable Content`.
+- [Done] Deactivated users (`is_active = false`) are rejected during login.
+- [Done] Login returns `{ "token": "...", "user": { ... } }`.
+- [Done] Requests with `Authorization: Bearer <token>` succeed on `GET /api/v1/me`.
+- [Done] Unauthenticated requests to protected endpoints return `401`.
+- [Done] Logout invalidates the token so it cannot be reused.
 
 ---
 
 ## 🏷️ Milestone 3: Ticket Categories Module
+
 **Goal:** Build category management to practice Form Requests, API Resources, and Policy authorization.
 
 ### Tasks:
-- [ ] Create `CategoryPolicy` (only `ADMIN` can create, update, or deactivate; all authenticated users can view).
-- [ ] Create `StoreCategoryRequest` and `UpdateCategoryRequest` (validate unique name, optional description).
-- [ ] Create `CategoryResource`.
-- [ ] Create `CategoryController` under `app/Http/Controllers/Api/V1/` (`index`, `store`, `show`, `update`).
-- [ ] Implement `PATCH /api/v1/ticket-categories/{id}/status` to toggle active/inactive state.
-- [ ] Register routes in `routes/api.php` under `/api/v1/` protected by `auth:sanctum`.
+
+- [Done] Create `CategoryPolicy` (only `ADMIN` can create, update, or deactivate; all authenticated users can view).
+- [Done] Create `StoreCategoryRequest` and `UpdateCategoryRequest` (validate unique name, optional description).
+- [Done] Create `CategoryResource`.
+- [Done] Create `CategoryController` under `app/Http/Controllers/Api/V1/` (`index`, `store`, `show`, `update`).
+- [Done] Implement `PATCH /api/v1/ticket-categories/{id}/status` to toggle active/inactive state.
+- [Done] Register routes in `routes/api.php` under `/api/v1/` protected by `auth:sanctum`.
 
 ### Definition of Done:
-- [ ] `GET /api/v1/ticket-categories` is accessible by all authenticated roles.
-- [ ] `POST`, `PUT/PATCH`, and status changes by non-admins return `403 Forbidden`.
-- [ ] Duplicate category names are rejected with `422 Unprocessable Content`.
-- [ ] Inactive categories remain in the database for historical tickets.
+
+- [Done] `GET /api/v1/ticket-categories` is accessible by all authenticated roles.
+- [Done] `POST`, `PUT/PATCH`, and status changes by non-admins return `403 Forbidden`.
+- [Done] Duplicate category names are rejected with `422 Unprocessable Content`.
+- [Done] Inactive categories remain in the database for historical tickets.
 
 ---
 
 ## 🎫 Milestone 4: Ticket Creation & Listing
+
 **Goal:** Allow employees to file tickets with formatted sequence numbers, and support filtered ticket listings.
 
 ### Tasks:
-- [ ] Create `TicketService` under `app/Services/`.
-- [ ] Implement unique ticket number generation (e.g., `TCK-YYYYMM-XXXX`).
-- [ ] Create `StoreTicketRequest` (validates `subject`, `description`, and ensures `category_id` references an active category).
-- [ ] Implement `POST /api/v1/tickets`:
+
+- [Done] Create `TicketService` under `app/Services/`.
+- [Done] Implement unique ticket number generation (e.g., `TCK-YYYYMM-XXXX`).
+- [Done] Create `StoreTicketRequest` (validates `subject`, `description`, and ensures `category_id` references an active category).
+- [Done] Implement `POST /api/v1/tickets`:
   - Explicitly assign `requester_id` from `auth()->id()`.
   - Default status to `OPEN`.
   - Record `TICKET_CREATED` in `ticket_activities` within `DB::transaction()`.
-- [ ] Create `TicketPolicy` (Employees view only own tickets; Agents & Admins view all).
-- [ ] Implement `GET /api/v1/tickets`:
+- [Done] Create `TicketPolicy` (Employees view only own tickets; Agents & Admins view all).
+- [Done] Implement `GET /api/v1/tickets`:
   - Server-side pagination (`paginate(15)`).
   - Query filters: `status`, `category_id`, and search by subject/ticket number.
   - Eager load relationships (`category`, `requester:id,name`, `assignee:id,name`).
-- [ ] Create `TicketResource` to format ticket output.
+- [Done] Create `TicketResource` to format ticket output.
 
 ### Definition of Done:
-- [ ] Employees can create a ticket with valid inputs.
-- [ ] Creating a ticket with an inactive category returns a validation error.
-- [ ] `ticket_number` is auto-generated and unique.
-- [ ] Employees calling `GET /api/v1/tickets` only see their own tickets.
-- [ ] Agents calling `GET /api/v1/tickets` see all tickets with pagination metadata.
+
+- [Done] Employees can create a ticket with valid inputs.
+- [Done] Creating a ticket with an inactive category returns a validation error.
+- [Done] `ticket_number` is auto-generated and unique.
+- [Done] Employees calling `GET /api/v1/tickets` only see their own tickets.
+- [Done] Agents calling `GET /api/v1/tickets` see all tickets with pagination metadata.
 
 ---
 
 ## 🔄 Milestone 5: Ticket Lifecycle, Assignment & Activity History
+
 **Goal:** Support agents manage ticket workflows while capturing an immutable audit trail.
 
 ### Tasks:
+
 - [ ] In `TicketService`, implement methods wrapped in `DB::transaction()`:
   - `assignTicket(Ticket $ticket, User $assignee, User $actor)`
   - `updateStatus(Ticket $ticket, TicketStatus $newStatus, User $actor)`
@@ -158,6 +172,7 @@ Milestone 8: Frontend (Quasar SPA) Integration
 - [ ] Enforce policies so only Agents and Admins can perform lifecycle changes.
 
 ### Definition of Done:
+
 - [ ] Employees attempting to change ticket status or assign tickets receive `403 Forbidden`.
 - [ ] Invalid status jumps (e.g., jumping from `OPEN` directly to `CLOSED`) are rejected.
 - [ ] Assigning a non-agent user (e.g., assigning another employee) is rejected.
@@ -167,9 +182,11 @@ Milestone 8: Frontend (Quasar SPA) Integration
 ---
 
 ## 💬 Milestone 6: Ticket Comments
+
 **Goal:** Enable communication on tickets while preserving conversation history.
 
 ### Tasks:
+
 - [ ] Create `StoreCommentRequest` (validates `body` is required).
 - [ ] Create `CommentPolicy` (user can comment only if they own the ticket or are an Agent/Admin).
 - [ ] Implement `POST /api/v1/tickets/{id}/comments`:
@@ -180,6 +197,7 @@ Milestone 8: Frontend (Quasar SPA) Integration
 - [ ] Create `CommentResource`.
 
 ### Definition of Done:
+
 - [ ] An employee cannot view or add comments on another employee's ticket (`403 Forbidden`).
 - [ ] Comments are returned with user details without causing N+1 database queries.
 - [ ] Adding a comment logs an entry in `ticket_activities`.
@@ -187,9 +205,11 @@ Milestone 8: Frontend (Quasar SPA) Integration
 ---
 
 ## 📊 Milestone 7: Admin User Management & Dashboard Metrics
+
 **Goal:** Admin user administration and high-performance dashboard summary counts.
 
 ### Tasks:
+
 - [ ] Create `UserPolicy` (all actions restricted to `ADMIN` only).
 - [ ] Implement admin user routes:
   - `GET /api/v1/users` (list users with pagination and role filters).
@@ -201,6 +221,7 @@ Milestone 8: Frontend (Quasar SPA) Integration
   - Use single aggregate queries / `withCount()` to avoid multiple full table scans.
 
 ### Definition of Done:
+
 - [ ] Non-admin users cannot access user management endpoints (`403 Forbidden`).
 - [ ] Deactivating an admin or user immediately prevents them from logging in.
 - [ ] Dashboard metrics endpoint executes efficiently in 1–2 SQL queries.
@@ -208,9 +229,11 @@ Milestone 8: Frontend (Quasar SPA) Integration
 ---
 
 ## 🖥️ Milestone 8: Frontend (Quasar Vue 3 SPA)
+
 **Goal:** Build the single-page application and integrate with the Laravel API.
 
 ### Tasks:
+
 - [ ] Initialize Quasar project in `frontend/`.
 - [ ] Configure Axios boot file (`src/boot/axios.js`):
   - Base URL: `http://localhost:8000/api/v1`.
@@ -233,6 +256,7 @@ Milestone 8: Frontend (Quasar SPA) Integration
   - Admin management views for users and categories.
 
 ### Definition of Done:
+
 - [ ] Complete end-to-end flow works: Employee logs in, creates a ticket, views it in the list.
 - [ ] Support agent logs in, sees unassigned ticket, assigns to self, updates status to `IN_PROGRESS`, adds comment, and resolves ticket.
 - [ ] Activity timeline visually reflects all state transitions.

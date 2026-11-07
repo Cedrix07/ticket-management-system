@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\CategoryController;
+use App\Http\Controllers\Api\V1\TicketCommentController;
 use App\Http\Controllers\Api\V1\TicketController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -27,5 +28,7 @@ Route::prefix('v1')->group(function () {
        Route::patch('tickets/{ticket}/resolve', [TicketController::class, 'resolve']);
        Route::patch('tickets/{ticket}/close', [TicketController::class, 'close']);
        Route::get('tickets/{ticket}/activities', [TicketController::class, 'activities']);
+       Route::get('tickets/{ticket}/comments', [TicketCommentController::class, 'index']);
+       Route::post('tickets/{ticket}/comments', [TicketCommentController::class, 'store']);
    });
 });

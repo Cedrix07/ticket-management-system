@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Enums\TicketStatus;
 use App\Models\Ticket;
+use App\Models\TicketComment;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
@@ -135,6 +136,33 @@ class TicketService
             return $ticket;
         });
     }
+
+    public function addComment(Ticket $ticket, string $body, User $actor): TicketComment
+    {
+        if($ticket->status === TicketStatus::CLOSED)
+        {
+            throw new \DomainException("Cannot add comments to a closed ticket.");
+        }
+
+        return DB::transaction(function () use ($ticket, $body, $actor) {
+            // Step 1: create comment
+            $comment = $ticket->comments()->create([
+                'user_id' => $actor->id,
+                'body'    => $body,
+            ]);
+
+            $ticket->activities()->create([
+                'event_type' => 'COMMENT_ADDED',
+                'user_id' => $actor->id,
+                'old_value' => null,
+                'new_value' => null,
+                'description' => "Comment added by {$actor->name}"
+            ]);
+
+            return $comment;
+        });
+    }
+
     private function generateTicketNumber(): string
     {
         $prefix = 'TCK';

@@ -51,8 +51,13 @@ class TicketPolicy
         return in_array($user->role, [UserRole::ADMIN, UserRole::SUPPORT_AGENT]);
     }
 
-     public function close(User $user, Ticket $ticket) : bool
+    public function close(User $user, Ticket $ticket) : bool
     {
         return in_array($user->role, [UserRole::ADMIN, UserRole::SUPPORT_AGENT]);
+    }
+
+    public function addComment(User $user, Ticket $ticket): bool
+    {
+        return in_array($user->role, [UserRole::ADMIN, UserRole::SUPPORT_AGENT]) || $ticket->requester_id === $user->id;
     }
 }

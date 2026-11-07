@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\TicketPriority;
+use App\Enums\TicketStatus;
 use Illuminate\Database\Eloquent\Model;
 
 class Ticket extends Model
@@ -47,7 +49,9 @@ class Ticket extends Model
     {
         return [
             'resolved_at' => 'datetime',
-            'closed_at' => 'datetime'
+            'closed_at' => 'datetime',
+            'status' => TicketStatus::class,
+            'priority' => TicketPriority::class,
         ];
     }
 }

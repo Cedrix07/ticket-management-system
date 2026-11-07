@@ -41,27 +41,18 @@ class TicketPolicy
         return false;
     }
 
-    /**
-     * Determine whether the user can delete the model.
-     */
-    public function delete(User $user, Ticket $ticket): bool
+    public function assign(User $user, Ticket $ticket) : bool
     {
-        return false;
+        return in_array($user->role, [UserRole::ADMIN, UserRole::SUPPORT_AGENT]);
     }
 
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Ticket $ticket): bool
+    public function resolve(User $user, Ticket $ticket) : bool
     {
-        return false;
+        return in_array($user->role, [UserRole::ADMIN, UserRole::SUPPORT_AGENT]);
     }
 
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Ticket $ticket): bool
+     public function close(User $user, Ticket $ticket) : bool
     {
-        return false;
+        return in_array($user->role, [UserRole::ADMIN, UserRole::SUPPORT_AGENT]);
     }
 }

@@ -4,9 +4,13 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\V1\AssignTicketRequest;
+use App\Http\Requests\Api\V1\ResolveTicketRequest;
 use App\Http\Requests\Api\V1\StoreTicketRequest;
+use App\Http\Resources\Api\V1\TicketActivityResource;
 use App\Http\Resources\Api\V1\TicketResource;
 use App\Models\Ticket;
+use App\Models\User;
 use App\Services\TicketService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -52,5 +56,39 @@ class TicketController extends Controller
         Gate::authorize('view', $ticket);
         $ticket->load('requester', 'assignee', 'category');
         return new TicketResource($ticket);
+    }
+
+    public function assign(AssignTicketRequest $request, Ticket $ticket)
+    {
+        Gate::authorize('assign', $ticket);
+        $assignee = User::findOrFail($request->validated('assignee_id'));
+        $ticket = $this->ticketService->assignTicket($ticket, $assignee, $request->user());
+        return new TicketResource($ticket->load(['assignee', 'requester', 'category']));
+    }
+
+    public function resolve(ResolveTicketRequest $request, Ticket $ticket)
+    {
+        Gate::authorize('resolve', $ticket);
+        $ticket = $this->ticketService->resolveTicket($ticket, $request->validated('resolution_notes'), $request->user());
+        return new TicketResource($ticket->load(['assignee', 'requester', 'category']));
+    }
+
+    public function close(Request $request, Ticket $ticket)
+    {
+        Gate::authorize('close', $ticket);
+        $ticket = $this->ticketService->closeTicket($ticket, $request->user());
+        return new TicketResource($ticket->load(['assignee', 'requester', 'category']));
+    }
+
+    public function activities(Ticket $ticket)
+    {
+        Gate::authorize('view', $ticket);
+
+        $activities = $ticket->activities()
+            ->with('user')
+            ->oldest('id')
+            ->get();
+
+        return TicketActivityResource::collection($activities);
     }
 }

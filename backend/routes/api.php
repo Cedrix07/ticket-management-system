@@ -21,5 +21,11 @@ Route::prefix('v1')->group(function () {
         Route::patch('ticket-categories/{ticket_category}/status', [CategoryController::class, 'toggleStatus']);
 
         Route::apiResource('tickets', TicketController::class)->only(['index', 'store', 'show']);
+
+        // Tickets actions
+       Route::patch('tickets/{ticket}/assign', [TicketController::class, 'assign']);
+       Route::patch('tickets/{ticket}/resolve', [TicketController::class, 'resolve']);
+       Route::patch('tickets/{ticket}/close', [TicketController::class, 'close']);
+       Route::get('tickets/{ticket}/activities', [TicketController::class, 'activities']);
    });
 });

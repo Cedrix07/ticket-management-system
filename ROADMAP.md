@@ -158,26 +158,26 @@ Milestone 8: Frontend (Quasar SPA) Integration
 
 ### Tasks:
 
-- [ ] In `TicketService`, implement methods wrapped in `DB::transaction()`:
+- [Done] In `TicketService`, implement methods wrapped in `DB::transaction()`:
   - `assignTicket(Ticket $ticket, User $assignee, User $actor)`
   - `updateStatus(Ticket $ticket, TicketStatus $newStatus, User $actor)`
   - `updatePriority(Ticket $ticket, TicketPriority $newPriority, User $actor)`
-- [ ] Validate allowable status transitions: `OPEN` ➔ `IN_PROGRESS` ➔ `RESOLVED` ➔ `CLOSED`.
-- [ ] Create Form Requests: `AssignTicketRequest`, `UpdateStatusRequest`, `UpdatePriorityRequest`.
-- [ ] Implement endpoints:
+- [Done] Validate allowable status transitions: `OPEN` ➔ `IN_PROGRESS` ➔ `RESOLVED` ➔ `CLOSED`.
+- [Done] Create Form Requests: `AssignTicketRequest`, `UpdateStatusRequest`, `UpdatePriorityRequest`.
+- [Done] Implement endpoints:
   - `PATCH /api/v1/tickets/{id}/assign`
   - `PATCH /api/v1/tickets/{id}/status`
   - `PATCH /api/v1/tickets/{id}/priority`
   - `GET /api/v1/tickets/{id}/activities`
-- [ ] Enforce policies so only Agents and Admins can perform lifecycle changes.
+- [Done] Enforce policies so only Agents and Admins can perform lifecycle changes.
 
 ### Definition of Done:
 
-- [ ] Employees attempting to change ticket status or assign tickets receive `403 Forbidden`.
-- [ ] Invalid status jumps (e.g., jumping from `OPEN` directly to `CLOSED`) are rejected.
-- [ ] Assigning a non-agent user (e.g., assigning another employee) is rejected.
-- [ ] Every transition inserts an activity record with `old_value`, `new_value`, and the acting `user_id`.
-- [ ] `GET /api/v1/tickets/{id}/activities` returns the timeline in chronological order.
+- [Done] Employees attempting to change ticket status or assign tickets receive `403 Forbidden`.
+- [Done] Invalid status jumps (e.g., jumping from `OPEN` directly to `CLOSED`) are rejected.
+- [Done] Assigning a non-agent user (e.g., assigning another employee) is rejected.
+- [Done] Every transition inserts an activity record with `old_value`, `new_value`, and the acting `user_id`.
+- [Done] `GET /api/v1/tickets/{id}/activities` returns the timeline in chronological order.
 
 ---
 

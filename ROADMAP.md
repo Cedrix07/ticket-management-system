@@ -187,20 +187,20 @@ Milestone 8: Frontend (Quasar SPA) Integration
 
 ### Tasks:
 
-- [ ] Create `StoreCommentRequest` (validates `body` is required).
-- [ ] Create `CommentPolicy` (user can comment only if they own the ticket or are an Agent/Admin).
-- [ ] Implement `POST /api/v1/tickets/{id}/comments`:
+- [Done] Create `StoreCommentRequest` (validates `body` is required).
+- [Done] Create `CommentPolicy` (user can comment only if they own the ticket or are an Agent/Admin).
+- [Done] Implement `POST /api/v1/tickets/{id}/comments`:
   - Saves comment with `user_id = auth()->id()`.
   - Records `COMMENT_ADDED` in `ticket_activities`.
-- [ ] Implement `GET /api/v1/tickets/{id}/comments`:
+- [Done] Implement `GET /api/v1/tickets/{id}/comments`:
   - Eager load author (`with('user:id,name,role')`) to prevent N+1 queries.
-- [ ] Create `CommentResource`.
+- [Done] Create `CommentResource`.
 
 ### Definition of Done:
 
-- [ ] An employee cannot view or add comments on another employee's ticket (`403 Forbidden`).
-- [ ] Comments are returned with user details without causing N+1 database queries.
-- [ ] Adding a comment logs an entry in `ticket_activities`.
+- [Done] An employee cannot view or add comments on another employee's ticket (`403 Forbidden`).
+- [Done] Comments are returned with user details without causing N+1 database queries.
+- [Done] Adding a comment logs an entry in `ticket_activities`.
 
 ---
 

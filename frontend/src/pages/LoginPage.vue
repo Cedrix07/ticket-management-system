@@ -77,7 +77,13 @@
                 class="full-width q-py-sm text-weight-medium"
                 style="border-radius: 8px; height: 44px;"
                 :loading="authStore.isLoading"
-              />
+                :disable="authStore.isLoading"
+              >
+                <template v-slot:loading>
+                  <q-spinner-oval class="on-left" />
+                    Signing in...
+                </template>
+              </q-btn>
             </q-form>
 
             <div class="text-center text-caption text-secondary q-mt-lg">

@@ -210,21 +210,21 @@ Milestone 8: Frontend (Quasar SPA) Integration
 
 ### Tasks:
 
-- [ ] Create `UserPolicy` (all actions restricted to `ADMIN` only).
-- [ ] Implement admin user routes:
+- [Done] Create `UserPolicy` (all actions restricted to `ADMIN` only).
+- [Done] Implement admin user routes:
   - `GET /api/v1/users` (list users with pagination and role filters).
   - `POST /api/v1/users` (create user with role).
   - `PATCH /api/v1/users/{id}` (update user details and role).
   - `PATCH /api/v1/users/{id}/status` (activate or deactivate user).
-- [ ] Implement `GET /api/v1/dashboard/summary`:
+- [Done] Implement `GET /api/v1/dashboard/summary`:
   - Return counts for `open_tickets`, `in_progress_tickets`, `resolved_tickets`, and `my_assigned_tickets`.
   - Use single aggregate queries / `withCount()` to avoid multiple full table scans.
 
 ### Definition of Done:
 
-- [ ] Non-admin users cannot access user management endpoints (`403 Forbidden`).
-- [ ] Deactivating an admin or user immediately prevents them from logging in.
-- [ ] Dashboard metrics endpoint executes efficiently in 1–2 SQL queries.
+- [Done] Non-admin users cannot access user management endpoints (`403 Forbidden`).
+- [Done] Deactivating an admin or user immediately prevents them from logging in.
+- [Done] Dashboard metrics endpoint executes efficiently in 1–2 SQL queries.
 
 ---
 
@@ -234,26 +234,26 @@ Milestone 8: Frontend (Quasar SPA) Integration
 
 ### Tasks:
 
-- [ ] Initialize Quasar project in `frontend/`.
-- [ ] Configure Axios boot file (`src/boot/axios.js`):
+- [Done] Initialize Quasar project in `frontend/`.
+- [Done] Configure Axios boot file (`src/boot/axios.js`):
   - Base URL: `http://localhost:8000/api/v1`.
   - Request interceptor attaching `Authorization: Bearer <token>`.
   - Response interceptor handling `401` by clearing auth state and redirecting to `/login`.
-- [ ] Create Pinia `auth` store:
+- [Done] Create Pinia `auth` store:
   - State: `user`, `token`, `isAuthenticated`.
-  - Actions: `login`, `logout`, `fetchUser`.
+  - Actions: `login`, `logout`, `fetchMe`.
   - Persist token in `localStorage`.
 - [ ] Setup Vue Router guards:
-  - Protect authenticated routes from guest access.
-  - Redirect authenticated users away from `/login`.
-  - Enforce role-based route access where appropriate.
+  - [Done] Protect authenticated routes from guest access.
+  - [Done] Redirect authenticated users away from `/login`.
+  - [ ] Enforce role-based route access where appropriate.
 - [ ] Build UI Screens using Quasar components:
-  - `LoginPage.vue`: Form with validation and error notification.
-  - `TicketListPage.vue`: `<q-table>` with server-side pagination, filters, and status badges.
-  - `TicketCreatePage.vue`: Form with category `<q-select>` and text inputs.
-  - `TicketDetailPage.vue`: Ticket details, status controls, comments thread, and `<q-timeline>` for activities.
-  - `DashboardPage.vue`: Summary cards with ticket counts.
-  - Admin management views for users and categories.
+  - [Done] `LoginPage.vue`: Form with validation and error notification (`AlertBanner.vue`).
+  - [ ] `TicketListPage.vue`: `<q-table>` with server-side pagination, filters, and status badges.
+  - [ ] `TicketCreatePage.vue`: Form with category `<q-select>` and text inputs.
+  - [ ] `TicketDetailPage.vue`: Ticket details, status controls, comments thread, and `<q-timeline>` for activities.
+  - [ ] `DashboardPage.vue`: Summary cards with ticket counts.
+  - [ ] Admin management views for users and categories.
 
 ### Definition of Done:
 

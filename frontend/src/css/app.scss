@@ -1,0 +1,15 @@
+// 1. Google Font: Inter
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: #F8FAFC;
+  color: #0F172A;
+}
+
+// 2. Global Card Style: Flat, 10px radius, 1px border #E2E8F0, no heavy shadow
+.q-card {
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  box-shadow: none;
+}

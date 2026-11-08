@@ -13,3 +13,8 @@ export const formatEnum = (str) => {
   if (!str) return '';
   return str.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 };
+
+export const getInitials = (name) => {
+  if (!name) return 'U';
+  return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+};

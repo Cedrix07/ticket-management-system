@@ -12,7 +12,8 @@ export const useAuthStore = defineStore('auth', {
       isAuthenticated: (state) => !! state.token,
       isAdmin: (state) => state.user?.role === 'admin',
       isAgent: (state) => state.user?.role === 'support_agent',
-      isStaff: (state) => ['admin', 'support_agent'].includes(state.user?.role)
+      isStaff: (state) => ['admin', 'support_agent'].includes(state.user?.role),
+      isEmployee: (state) => state.user?.role === 'employee',
     },
     actions: {
       async login(credentials) {

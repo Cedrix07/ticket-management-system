@@ -33,6 +33,9 @@ class TicketController extends Controller
                 ->when($user->role === UserRole::EMPLOYEE, fn($q) => $q->where('requester_id', $user->id))
                 ->when($request->filled('status'), fn($q) => $q->where('status', $request->status))
                 ->when($request->filled('category_id'), fn($q) => $q->where('category_id', $request->category_id))
+                ->when($request->boolean('unassigned'), fn($q) => $q->whereNull('assignee_id'))
+                ->when($request->boolean('assigned_to_me'), fn($q) => $q->where('assignee_id', $user->id))
+                ->when($request->filled('priority'), fn($q) => $q->where('priority', $request->priority))
                 ->when($request->filled('search'), fn($q, $search) => $q->where(fn($sub) =>
                     $sub->where('ticket_number', 'like', "%{$search}%")
                         ->orWhere('subject', 'like', "%{$search}%")))

@@ -4,9 +4,7 @@ namespace Database\Seeders;
 
 use App\Enums\UserRole;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -15,45 +13,81 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        // Admin
-        User::firstOrCreate(
+        // 1. Admin (Alex Morgan)
+        User::updateOrCreate(
             ['email' => 'admin@example.com'],
             [
-                'name' => 'Admin',
+                'name' => 'Alex Morgan',
                 'role' => UserRole::ADMIN,
                 'password' => 'password',
                 'is_active' => true,
             ]
         );
 
-        // Support Agent
-        User::firstOrCreate(
+        // 2. Support Agent (Jamie Chen)
+        User::updateOrCreate(
             ['email' => 'agent@example.com'],
             [
-            'name' => 'Support Agent',
-            'role' => UserRole::SUPPORT_AGENT,
-            'password' => 'password',
-            'is_active' => true,
-        ]);
+                'name' => 'Jamie Chen',
+                'role' => UserRole::SUPPORT_AGENT,
+                'password' => 'password',
+                'is_active' => true,
+            ]
+        );
 
-        // Active Employee
-        User::firstOrCreate([
-            'email' => 'john.doe@example.com'],
+        // 3. Support Agent 2 (Sam Rivera)
+        User::updateOrCreate(
+            ['email' => 'sam@example.com'],
             [
-            'name' => 'John Doe',
-            'role' => UserRole::EMPLOYEE,
-            'password' => 'password',
-            'is_active' => true,
-        ]);
+                'name' => 'Sam Rivera',
+                'role' => UserRole::SUPPORT_AGENT,
+                'password' => 'password',
+                'is_active' => true,
+            ]
+        );
 
-        // Inactive Employee
-        User::firstOrCreate([
-            'email' => 'jane.doe@example.com'],
+        // 4. Employee (Maya Patel - matches employee@example.com)
+        User::updateOrCreate(
+            ['email' => 'employee@example.com'],
             [
-            'name' => 'Jane Doe',
-            'role' => UserRole::EMPLOYEE,
-            'password' => 'password',
-            'is_active' => false,
-        ]);
+                'name' => 'Maya Patel',
+                'role' => UserRole::EMPLOYEE,
+                'password' => 'password',
+                'is_active' => true,
+            ]
+        );
+
+        // 5. Employee (Noah Williams)
+        User::updateOrCreate(
+            ['email' => 'noah@example.com'],
+            [
+                'name' => 'Noah Williams',
+                'role' => UserRole::EMPLOYEE,
+                'password' => 'password',
+                'is_active' => true,
+            ]
+        );
+
+        // 6. Employee (Olivia Brown)
+        User::updateOrCreate(
+            ['email' => 'olivia@example.com'],
+            [
+                'name' => 'Olivia Brown',
+                'role' => UserRole::EMPLOYEE,
+                'password' => 'password',
+                'is_active' => true,
+            ]
+        );
+
+        // 7. Employee (Sofia Garcia)
+        User::updateOrCreate(
+            ['email' => 'sofia@example.com'],
+            [
+                'name' => 'Sofia Garcia',
+                'role' => UserRole::EMPLOYEE,
+                'password' => 'password',
+                'is_active' => true,
+            ]
+        );
     }
 }

@@ -44,7 +44,7 @@
     </div>
 
     <!-- Main Table Card Container -->
-    <q-card flat bordered class="bg-white q-pa-lg" style="border-radius: 10px;">
+    <q-card flat bordered class="bg-white q-pa-lg q-card">
 
       <!-- 1. Search Bar -->
       <q-input
@@ -213,13 +213,33 @@
         <!-- Action View Link Slot (Only on Ticket Queue View) -->
         <template v-slot:body-cell-action="props">
           <q-td :props="props" align="right">
-            <router-link
-              :to="'/tickets/' + props.row.id"
-              class="text-primary text-weight-medium"
-              style="text-decoration: none;"
-            >
-              View
-            </router-link>
+            <div class="row items-center justify-end q-gutter-x-xs no-wrap">
+              <!-- 1. Eye Icon (View Details): Visible to EVERYONE -->
+              <q-btn
+                flat
+                round
+                dense
+                size="sm"
+                color="secondary"
+                icon="visibility"
+                :to="'/tickets/' + props.row.id"
+              >
+                <q-tooltip>View details</q-tooltip>
+              </q-btn>
+              <!-- 2. Assign Action: Visible ONLY to Admin & Support Agent (TODO: Option A Modal) -->
+              <!-- <q-btn
+                v-if="authStore.isStaff && !props.row.assignee"
+                flat
+                round
+                dense
+                size="sm"
+                color="primary"
+                icon="person_add_alt"
+                @click="openAssignDialog(props.row)"
+              >
+                <q-tooltip>Assign ticket</q-tooltip>
+              </q-btn> -->
+            </div>
           </q-td>
         </template>
 
@@ -381,12 +401,8 @@ const columns = computed(() => {
     { name: 'requester', label: 'Requester', field: 'requester', align: 'left' },
     { name: 'assignee', label: 'Assigned to', field: 'assignee', align: 'left' },
     { name: 'created_at', label: 'Created', field: 'created_at', align: 'left' },
+    { name: 'action', label: 'Action', field: 'id', align: 'right' }
   ];
-
-  if (isQueueView.value) {
-    base.push({ name: 'action', label: 'Action', field: 'id', align: 'right' });
-  }
-
   return base;
 });
 
@@ -456,7 +472,7 @@ const handleSearch = () => {
 
 const clearSearch = () => {
   filters.search = '';
-  lastSearched = ''; 
+  lastSearched = '';
   pagination.page = 1;
   fetchTickets();
 };

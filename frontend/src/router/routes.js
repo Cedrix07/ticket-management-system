@@ -4,8 +4,9 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/DashboardPage.vue') },
-      { path: 'tickets', component: () => import('pages/TicketListPage.vue') },
-      { path: 'tickets/queue', component: () => import('pages/TicketListPage.vue') }
+      { path: 'tickets', component: () => import('pages/TicketListPage.vue'), name: 'tickets' },
+      { path: 'tickets/queue', component: () => import('pages/TicketListPage.vue') },
+      { path: 'tickets/:id', component: () => import('pages/TicketDetailPage.vue')}
     ]
   },
   {

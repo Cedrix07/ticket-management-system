@@ -53,7 +53,8 @@
         dense
         placeholder="Search tickets by number or subject"
         class="q-mb-md filter-input"
-        @update:model-value="onSearchInput"
+        @keydown.enter="handleSearch"
+        @change="handleSearch"
       >
         <template v-slot:prepend>
           <q-icon name="search" size="18px" color="secondary" />
@@ -439,18 +440,23 @@ const fetchTickets = async () => {
   }
 };
 
-// Search Debounce Handler
-let searchTimer = null;
-const onSearchInput = () => {
-  clearTimeout(searchTimer);
-  searchTimer = setTimeout(() => {
-    pagination.page = 1;
-    fetchTickets();
-  }, 350);
+
+let lastSearched = ''
+const handleSearch = () => {
+  const currentSearch = filters.search.trim();
+
+  if(currentSearch === lastSearched) {
+    return;
+  }
+  lastSearched = currentSearch;
+  pagination.page = 1;
+  fetchTickets();
 };
+
 
 const clearSearch = () => {
   filters.search = '';
+  lastSearched = ''; 
   pagination.page = 1;
   fetchTickets();
 };

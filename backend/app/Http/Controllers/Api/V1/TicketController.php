@@ -36,9 +36,9 @@ class TicketController extends Controller
                 ->when($request->boolean('unassigned'), fn($q) => $q->whereNull('assignee_id'))
                 ->when($request->boolean('assigned_to_me'), fn($q) => $q->where('assignee_id', $user->id))
                 ->when($request->filled('priority'), fn($q) => $q->where('priority', $request->priority))
-                ->when($request->filled('search'), fn($q, $search) => $q->where(fn($sub) =>
-                    $sub->where('ticket_number', 'like', "%{$search}%")
-                        ->orWhere('subject', 'like', "%{$search}%")))
+                ->when($request->filled('search'), fn($q) => $q->where(fn($sub) =>
+                    $sub->where('ticket_number', 'like', "%{$request->search}%")
+                        ->orWhere('subject', 'like', "%{$request->search}%")))
                 ->latest();
         return TicketResource::collection($tickets->paginate($request->integer('per_page', 15)));
     }

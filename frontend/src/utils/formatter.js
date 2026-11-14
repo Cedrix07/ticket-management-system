@@ -8,6 +8,17 @@ export const formatDate = (dateString) => {
   }).format(date);
 };
 
+// Short date only formatter (e.g. "Nov 1, 2026")
+export const formatShortDate = (dateString) => {
+  if (!dateString) return '-';
+  const date = new Date(dateString);
+  return new Intl.DateTimeFormat('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  }).format(date);
+};
+
 // Capitalize and format enum strings (e.g. "in_progress" -> "In Progress")
 export const formatEnum = (str) => {
   if (!str) return '';

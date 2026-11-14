@@ -147,7 +147,7 @@ const allNavItems = [
   { label: 'All Tickets', icon: 'inbox', to: '/tickets', roles: ['admin'] },
   { label: 'My Tickets', icon: 'inbox', to: '/tickets?assigned_to_me=true', roles: ['support_agent'] },
   { label: 'My Tickets', icon: 'inbox', to: '/tickets', roles: ['employee'] },
-  { label: 'Ticket Queue', icon: 'mail_outline', to: '/tickets?unassigned=true', roles: ['admin', 'support_agent'] },
+  { label: 'Ticket Queue', icon: 'mail_outline', to: '/tickets/queue', roles: ['admin', 'support_agent'] },
   { label: 'Create Ticket', icon: 'add_circle_outline', to: '/tickets/create', roles: ['employee'] },
   { label: 'User Management', icon: 'people_outline', to: '/admin/users', roles: ['admin'] },
   { label: 'Categories', icon: 'folder_open', to: '/admin/categories', roles: ['admin'] },
